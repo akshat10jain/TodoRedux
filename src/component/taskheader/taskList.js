@@ -1,32 +1,43 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Task from './task'
+import { deleteTask } from '../../actions/index'
 
-class TaskList extends React.Component{
-    render(){
-        console.log('task ',this.props.tasks)
-        return(
+class TaskList extends React.Component {
+
+    handelDelete = (id) => {
+        this.props.dispatch(deleteTask(id))
+    }
+
+    render() {
+        return (
             <table>
                 <thead>
                     <tr>
                         <th>Tasks</th>
-                        <th>Action</th>
+                        <th>Remove</th>
                     </tr>
-                    
+
                 </thead>
                 <tbody>
-                
-                    {Array.from(Object.keys(this.props.tasks), k=>this.props.tasks[k]).map((task,index)=><Task key={index} task={task} />)}
-                    {/* {this.props.tasks.map((task,index)=><Task key={index} task={task} />)} */}
+                    {this.props.tasks.map((task, index) => {
+                        return (
+                            <tr key={task.id}>
+                                <td>{task.text}</td>
+                                <td>
+                                    <button onClick={(event) => { this.handelDelete(task.id) }}>Delete</button>
+                                </td>
+                            </tr>
+                        )
+                    })}
                 </tbody>
-                </table>
+            </table>
         )
     }
 }
 
-function mapStateToProps(state){
-    return{
-        tasks:state.tasks
+function mapStateToProps(state) {
+    return {
+        tasks: state.tasks
     }
 }
 

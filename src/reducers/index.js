@@ -1,22 +1,29 @@
-import {combineReducers} from 'redux'
+import { combineReducers } from 'redux'
 
 const helper = (state = [], action) => {
 
     switch (action.type) {
-        case 'ADD':            
-                state=state.concat(action.payload)
-                break;
+        case 'ADD':
+            return [
+                ...state,
+                {
+                    id: action.id,
+                    text: action.payload
+                }
+
+            ]
         case 'DELETE':
-                state=state.splice(action.payload, 1)
-                break;
+            return state.filter((todo) => {
+                return todo.id !== action.payload
+            })
         default:
-            break;
+            return state
 
     }
-    return state
+
 }
 const reducer = combineReducers({
-    tasks:helper
+    tasks: helper
 })
 
 export default reducer

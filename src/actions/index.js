@@ -1,6 +1,9 @@
+let todoId=0;
+
 export const addTodo=(task)=>{
     return{
         type:'ADD',
+        id:todoId++,
         payload:task
     }
 }
